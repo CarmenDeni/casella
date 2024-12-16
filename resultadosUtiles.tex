@@ -1,0 +1,80 @@
+%has un documento horizontal de dos columnas con entornos para definiciones, teoremas, etc.
+%y un documento vertical con el contenido.
+\documentclass[landscape,twocolumn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{graphicx}
+
+% Definiciones para entornos matemáticos
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{proposition}[theorem]{Proposición}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{corollary}[theorem]{Corolario}
+\newtheorem{definition}[theorem]{Definición}
+\newtheorem{example}{Ejemplo}[section]
+\newtheorem{remark}{Observación}[section]
+
+\begin{document}
+\section{Álgebra superior}
+\subsection{Funciones}
+
+\begin{theorem}
+    Para $f: \mathbb{X} \rightarrow \mathbb{Y}$ función, se cumple:
+    \begin{enumerate}
+        \item Si $A \subseteq Dom(f)$, $A = \emptyset$ si y solo si $f[A] = \emptyset$.
+        \item Si $f^{-1}[\emptyset] = \emptyset$.
+        \item Si $x \in Dom(f)$, $f[\{x\}] = \{f(x)\}$.
+        \item Si $A \subseteq B$ entonces $f[A] \subseteq f[B]$.
+        \item $f[A \cup B] = f[A] \cup f[B]$.
+        \item $f[A \cap B] \subseteq f[A] \cap f[B]$.
+        \item $f[A - B] \supseteq f[A] - f[B]$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    Si f y g son funciones 
+    \begin{enumerate}
+        \item $g \circ f [A] = g[f[A]]$.
+        \item $(g \circ f)^{-1}[A] = g^{-1}[f^{-1}[A]] $.
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}
+    $f: \mathbb{X} \rightarrow \mathbb{Y}$ es invertible si y solo si $f^{-1}$ es función.
+\end{definition}
+
+\begin{definition}
+    $f: \mathbb{X} \rightarrow \mathbb{Y}$ es inyectiva si y solo si $f(x) = f(y)$ implica $x = y$ para todo $x, y \in \mathbb{X}$.
+\end{definition}
+
+\begin{theorem}
+    Para $f: \mathbb{X} \rightarrow \mathbb{Y}$ Son equivalentes:
+    \begin{enumerate}
+        \item $f$ es inyectiva.
+        \item $\exists g: \mathbb{Y} \rightarrow \mathbb{X}$ tal que $g \circ f = id_{\mathbb{Y}}$.
+        \item $f(A \cap B) = f(A) \cap f(B)$ para todo $A, B \subseteq \mathbb{X}$. (esta hay que revisarla)
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}
+    $f: \mathbb{X} \rightarrow \mathbb{Y}$ es sobreyectiva si y solo si para todo $y \in \mathbb{Y}$ existe $x \in \mathbb{X}$ tal que $f(x) = y$.
+\end{definition}
+
+\begin{theorem}
+    Si $f: \mathbb{X} \rightarrow \mathbb{Y}$ es función, son equivalentes las siguientes afirmaciones:
+    \begin{enumerate}
+        \item $f$ es sobreyectiva.
+        \item $\forall y \in \mathbb{Y}$, $f[\mathbb{X}] \supseteq y$.
+        \item $ \forall Z, Y$ conjuntos cualesquiera tales que $h, k: Z \rightarrow \mathbb{Y}$ si $h \circ f = k \circ f$ entonces $h = k$.
+        \item $\forall A \subseteq \mathbb{Y}$ y $A \ne \emptyset$ entonces $f^{-1}[A] \ne \emptyset$.
+        \item $\forall B \subseteq \mathbb{Y}$ entonces $B \subseteq f[f^{-1}[B]]$ 
+    \end{enumerate}
+\end{theorem}
+
+\end{document}

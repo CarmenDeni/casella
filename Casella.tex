@@ -1,0 +1,821 @@
+\documentclass[14pt]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[left=2cm, right=2cm, top=1cm, bottom=1cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{etoolbox}
+\usepackage{fancyhdr}
+\usepackage{anyfontsize}
+
+% Configurar el estilo de página
+\pagestyle{fancy}
+\fancyhf{} % Limpiar todos los campos
+\fancyfoot[C]{\thepage} % Colocar número de página en el centro
+\renewcommand{\footrulewidth}{0pt} % Quitar la línea del pie de página
+\renewcommand{\headrulewidth}{0pt} % Quitar la línea superior
+\setlength{\footskip}{21pt} % Ajustar la distancia del número de página
+
+% Aumentar el espacio entre columnas
+\setlength{\columnsep}{6em} % Puedes ajustar el valor según necesites
+
+% Definiciones para entornos matemáticos
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{proposition}[theorem]{Proposición}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{corollary}[theorem]{Corolario}
+\newtheorem{definition}[theorem]{Definición}
+\newtheorem{example}{Ejemplo}[section]
+\newtheorem{remark}{Observación}[section]
+\newtheorem{note}{Notación}[section]
+\newtheorem{axiom}[theorem]{Axioma}
+
+% Agregar después de las definiciones de newtheorem, antes de \begin{document}
+
+% Alternativa: ajustar espacios específicos para cada tipo de entorno
+\BeforeBeginEnvironment{theorem}{\vspace{15pt}}
+\AfterEndEnvironment{theorem}{\vspace{15pt}}
+
+\BeforeBeginEnvironment{definition}{\vspace{15pt}}
+\AfterEndEnvironment{definition}{\vspace{15pt}}
+
+\BeforeBeginEnvironment{example}{\vspace{15pt}}
+\AfterEndEnvironment{example}{\vspace{15pt}}
+
+\BeforeBeginEnvironment{remark}{\vspace{15pt}}
+\AfterEndEnvironment{remark}{\vspace{15pt}}
+
+\title{Acordeon Casella}
+\author{Carmen Dení}
+\date{\today}
+
+\begin{document}
+\fontsize{18}{22}\selectfont
+% Iniciar el modo landscape
+% Contenido directo sin columnas
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    Capitulo 1    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Teoría de probabilidad}
+
+\subsection{Teoría de conjuntos}
+Lo primero que debemos hacer es identificar los posibles resultados del experimento, es decir,
+el espacio muestral $S$.
+\begin{definition}
+    El espacio muestral $S$ es el conjunto de todos los posibles resultados de un experimento aleatorio.
+\end{definition}
+\begin{remark}
+    El espacio muestral puede ser numerable o no numerable.
+\end{remark}
+\begin{definition}
+    Un evento es una colección de posibles resultados de un experimento aleatorio, es decir,
+     cualquier subconjunto del espacio muestral incluyendo a $S$ mismo.
+     Para un evento $A$ decimos que $A$ ocurre si el resultado del experimento es un elemento de $A$.
+\end{definition}
+
+\begin{definition}
+    Sean $A$ y $B$ eventos (o conjuntos).
+    \begin{enumerate}
+        \item $A \subseteq B \iff (x \in A \implies x \in B)$
+        \item $A \cup B = \{x \in S : x \in A \text{ o } x \in B\}$
+        \item $A \cap B = \{x \in S : x \in A \text{ y } x \in B\}$
+        \item $A \setminus B = \{x \in S : x \in A \text{ y } x \notin B\}$
+        \item $A \Delta B = (A \setminus B) \cup (B \setminus A)$
+        \item $A^c = \{x \in S : x \notin A\}$
+    \end{enumerate}
+\end{definition}
+\begin{theorem}
+    Sean $A, B, C$ eventos definidos en un espacio muestral $S$. Entonces se cumplen las siguientes propiedades:
+    \begin{enumerate}
+        \item Conmutatividad: $A \cup B = B \cup A$ y $A \cap B = B \cap A$
+        \item Asociatividad: $A \cup (B \cup C) = (A \cup B) \cup C$ y $A \cap (B \cap C) = (A \cap B) \cap C$
+        \item Distributividad: $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$ y $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$
+        \item Leyes de De Morgan: $(A \cup B)^c = A^c \cap B^c$ y $(A \cap B)^c = A^c \cup B^c$
+        \item Leyes de De Morgan generalizadas: sea $\alpha$ una colección arbitraria de eventos, entonces:     
+        \begin{align*}
+            (\bigcup_{i=1}^\infty A_i)^c = \bigcap_{i=1}^\infty A_i^c \\
+            (\bigcap_{i=1}^\infty A_i)^c = \bigcup_{i=1}^\infty A_i^c
+        \end{align*}
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}
+    Decimos que $A$ y $B$ son mutuamente excluyentes si $A \cap B = \emptyset$.
+    Los eventos $A_1, A_2, \ldots$ son mutuamente excluyentes si $A_i \cap A_j = \emptyset$
+    para todo $i \neq j$.
+\end{definition}
+
+\begin{definition}
+    Si $A_1, A_2, \ldots$ son mutuamente excluyentes, decimos que la colección es una partición de $S$ si:
+    \begin{enumerate}
+        \item $A_i \neq \emptyset, \forall i$
+        \item $A_i \cap A_j = \emptyset, \forall i \neq j$
+        \item $\bigcup_{i=1}^\infty A_i = S$
+    \end{enumerate}
+\end{definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    1.2    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Teoría de probabilidad básica}
+\subsubsection{Fundamentos axiomáticos}
+\begin{definition}
+    Dado un espacio muestral $S$, una sigma-álgebra $\mathcal{B}$ sobre $S$ es una colección de
+     subconjuntos de $S$ que satisface:
+    \begin{enumerate}
+        \item $\emptyset \in \mathcal{B}$
+        \item Si $A \in \mathcal{B}$, entonces $A^c \in \mathcal{B}$
+        \item Si $A_1, A_2, \ldots \in \mathcal{B}$, entonces $\bigcup_{i=1}^\infty A_i \in \mathcal{B}$
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+    Sea $S$ un espacio muestral. Los siguientes conjuntos son sigma-álgebras sobre $S$:
+    \begin{enumerate}
+        \item $\mathcal{B} = \{\emptyset, S\}$
+        \item $\mathcal{B} = \{s: s \subseteq S\}$
+        \item Dadas $\mathcal{A}$ y $\mathcal{B}$ sigma-álgebras sobre $S$, $\mathcal{A} \cap \mathcal{B}$ es una sigma-álgebra sobre $S$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{definition}
+    Una función $P$ definida sobre una sigma-álgebra $\mathcal{B}$ es una función de probabilidad si satisface las siguientes propiedades:
+    \begin{enumerate}
+        \item $P(A) \geq 0$ para todo $A \in \mathcal{B}$
+        \item $P(S) = 1$
+        \item Si $A_1, A_2, \ldots$ son mutuamente excluyentes, entonces:
+        \[
+            P(\bigcup_{i=1}^\infty A_i) = \sum_{i=1}^\infty P(A_i)
+        \] 
+        A esta propiedad se le conoce como aditividad numerable.
+    \end{enumerate}
+    A estas propiedades se les conoce como axiomas de Kolmogorov.
+\end{definition}
+
+\begin{axiom}
+    Si $A$ y $B$ son mutuamente excluyentes, entonces $$P(A \cup B) = P(A) + P(B)$$.
+    A esta propiedad se le conoce como aditividad finita.
+\end{axiom}
+
+\begin{proposition}
+    Sea $A_1 \supset A_2 \supset \cdots \supset A_n \supset \cdots$ una sucesión de eventos anidados tales que su intersección es vacía.
+    Son equivalentes los siguientes puntos:
+    \begin{enumerate}
+        \item
+        \begin{enumerate}
+            \item $P(A_i) \to 0$ cuando $i \to \infty$ 
+            \item Aditividad finita
+        \end{enumerate}
+        \item Aditividad numerable
+    \end{enumerate}
+\end{proposition}
+
+\begin{theorem}
+    Sea  $S = \{s_1, s_2, \ldots, s_n\}$ un espacio muestral finito. Sea $\mathcal{B}$ una sigma algebra de $S$.
+    Sean $p_1, p_2, \ldots, p_n$ números no negativos tales que $\sum_{i=1}^n p_i = 1$. Para cualquier $A \in \mathcal{B}$,
+    definimos:
+    \[
+        P(A) = \sum_{\{ i: s_i \in A \}}^n p_i
+    \]
+    Entonces $P$ es una función de probabilidad sobre $\mathcal{B}$. Esto se verifica tambien para $S = \{s_1, s_2, \ldots\}$.
+\end{theorem}
+
+%%%%%%%%%%%%%%%          %%%%%%%%%%%%%%%          %%%%%%%%%%%%%%%          %%%%%%%%%%%%%%%          %%%%%%%%%%%%%%%          %%%%%%%%%%%%%%%                   
+\subsubsection{Calculo probabilidades}
+\begin{theorem}
+    Si P es una funcion de probabilidad y $A$ cualquier conjunto en $\mathcal{B}$, entonces:
+    \begin{enumerate}
+        \item $P(\emptyset) = 0$
+        \item $P(A) \leq 1$
+        \item $P(A^c) = 1 - P(A)$
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    Si $P$ es una función de probabilidad y $A, B \in \mathcal{B}$, entonces:
+    \begin{enumerate}
+        \item $P(B \cap A^c) = P(B) - P(A \cap B)$
+        \item $P(A \cup B) = P(A) + P(B) - P(A \cap B)$
+        \item Si $A \subseteq B$, entonces $P(A) \leq P(B)$
+        \item Si $P(A \cap B) \leq 1$, entonces $P(A \cap B) = P(A) + P(B) - 1$
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+    Si $P$ es una función de probabilidad, entonces
+    \begin{enumerate}
+        \item $P(A) = \sum_{i=1}^\infty P(A \cap C_i)$ para cualquier partición $C_1, C_2, \ldots$ de $S$
+        \item $P(\bigcup_{i=1}^\infty A_i) \leq \sum_{i=1}^\infty P(A_i)$ para cualquier colección de eventos $A_1, A_2, \ldots$
+    \end{enumerate}
+\end{theorem}
+
+
+%%%%%%%%%%%%%%%          %%%%%%%%%%%%%%%          %%%%%%%%%%%%%%%          %%%%%%%%%%%%%%%          %%%%%%%%%%%%%%%          %%%%%%%%%%%%%%%          
+\subsubsection{Conteo}
+
+\begin{theorem}
+    Si un trabajo consiste en k tareas sucesivas, y la tarea $i$ puede ser realizada de $n_i$ maneras, entonces el trabajo
+    puede ser realizado de $n_1 \times n_2 \times \cdots \times n_k$ maneras.
+\end{theorem}
+
+\begin{remark}
+    Se puede contar con remplazo o sin remplazo, tomando en cuenta el orden o no.
+\end{remark}
+
+\begin{definition}
+Para un entero positivo $n$, $n!$ denota el producto de los enteros positivos desde 1 hasta $n$.
+Es decir: $$n! = 1 \times 2 \times \cdots \times n$$.
+Definimos $0! = 1$.
+\end{definition}
+
+\begin{definition}
+    Para enteros no negativos $n$ y $r$, con $n \geq r$, definimos el simbolo $\binom{n}{r}$ como el numero de subconjuntos
+    de $r$ elementos de un conjunto de $n$ elementos. Este simbolo se lee "r en n" y se calcula como:
+    \[
+        \binom{n}{r} = \frac{n!}{r!(n-r)!}
+    \]
+\end{definition}
+
+\begin{proposition}
+    Supongamos que $n$ y $r$ son enteros no negativos con $n \geq r$ y supongamos que queremos elegir $r$ objetos de un conjunto
+    de $n$ objetos. Podemos hacerlo de las siguientes maneras:
+    \begin{enumerate}
+        \item Ordenados sin reemplazo.
+        \begin{align*}  
+            \frac{n!}{(n-r)!}
+        \end{align*}
+        \item Ordenados con reemplazo.
+        \begin{align*}
+            n^r
+        \end{align*}
+        \item No ordenados sin reemplazo.
+        \begin{align*}
+            \binom{n}{r}
+        \end{align*}
+        \item No ordenados con reemplazo.
+        \begin{align*}
+            \binom{n+r-1}{r}
+        \end{align*}
+    \end{enumerate}
+\end{proposition}
+
+
+%%%%%%%%%%%%%%%          %%%%%%%%%%%%%%%          %%%%%%%%%%%%%%%          %%%%%%%%%%%%%%%          %%%%%%%%%%%%%%%          %%%%%%%%%%%%%%%          
+\subsubsection{Enumerar los resultados de un experimento}
+
+\begin{definition}
+    Sea $S = \{s_1, s_2, \ldots, s_N\}$ un espacio muestral finito. Decimos que todos los resultados 
+    son igualmente probables si $$P(\{s_i\}) = \frac{1}{N}$$ para todo $i = 1, 2, \ldots, N$.
+\end{definition}
+
+\begin{proposition}
+    Si $S$ es un espacio muestral finito con $N$ resultados igualmente probables, entonces para cualquier evento $A$,
+    \[
+        P(A) = \sum_{\{s_i \in A\}} P(\{s_i\}) = \sum_{\{i: s_i \in A\}}^N \frac{1}{N} = \frac{|A|}{N}
+    \]
+\end{proposition}
+
+\begin{proposition}
+    Sean $n$ y $r$ enteros no negativos con $n \geq r$. Pensemos que queremos saber cuantos vectores $(x_1, x_2, \ldots, x_r)$ de longitud $r$ distintos
+    podemos formar tales que la suma de sus componentes es $n$. Entonces:
+    \begin{enumerate}
+        \item Para $x_i > 0$, entonces el numero de vectores es $\binom{n+r-1}{r}$
+        \item Para $x_i \geq 0$, entonces el numero de vectores es $\binom{n+r-1}{r}$
+    \end{enumerate}
+\end{proposition}
+    
+\begin{proposition}
+    Si tenemos $k$ lugares y y $m$ objetos repetidos $k_1, k_2, \ldots, k_m$ con $k_1 + k_2 + \cdots + k_m = k$, entonces
+    el numero de formas de asignar los $k$ lugares a los $m$ objetos es:
+    \[
+        \frac{k!}{k_1! k_2! \cdots k_m!}
+    \]
+\end{proposition}
+
+\begin{proposition}
+    Sea $n$ un entero no negativo. Entonces:
+    \begin{enumerate}
+        \item $\sum_{k=0}^n \binom{n}{k}x^k = (x+1)^n$ en particular\\ $\sum_{k=0}^n \binom{n}{k} = 2^n$
+        \item $\sum_{k=0}^n (-1)^k \binom{n}{k} = 0$
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+    Sean $n$ y $r$ enteros no negativos con $n \geq r$. El número de formas de distribuir $n$ objetos entre $r$ conjuntos
+    tal que cada conjunto reciba al menos un objeto está dado por:
+    \[
+        \sum_{k=0}^r (-1)^{k+1}\binom{r}{k}(r-k)^n
+    \]
+    A esta forma de conteo se le llama principio de inclusion-exclusion.
+\end{proposition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    1.3    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Probabilidad condicional e independencia}
+En muchos casos podemos redefinir el espacio muestral para plasmar información adicional sobre el experimento. En ese caso deberíamos poder
+recalcular las probabilidades de los eventos en el nuevo espacio muestral.
+
+\begin{definition}
+    Si $A$ y $B$ son eventos en $S$con $P(B) > 0$, entonces la probabilidad condicional de $A$ dado $B$ es:
+    \[
+        P(A|B) = \frac{P(A \cap B)}{P(B)}
+    \]
+\end{definition}
+
+\begin{proposition}
+    Sea $B$ un evento con $P(B) > 0$ entonces la función $P(A|B)$ definida para todo $A \in \mathcal{B}$ es una función de probabilidad,
+    es decir satisface los axiomas de Kolmogorov.
+\end{proposition}
+
+\begin{proposition}
+    Sea $B$ un evento con $P(B) > 0$. Entonces para cualquier evento $A$:
+    \[
+        P(A|B) = P(B|A) \frac{P(A)}{P(B)}
+    \]
+\end{proposition}
+
+
+\begin{theorem}
+    Sea $A_1, A_2, \ldots$ una partición de $S$ y cualquier evento $B$. Entonces:
+    \[
+        P(A_i|B) = \frac{P(B|A_i)P(A_i)}{\sum_{j=1}^\infty P(B|A_j)P(A_j)}
+    \]
+    Para cada $i = 1, 2, \ldots$.
+\end{theorem}
+
+\begin{definition}
+    Si un evento $B$ no impacta la ocurrencia de otro evento $A$, entonces:
+    \[
+        P(A|B) = P(A)
+    \]
+    Decimos que $A$ y $B$ son independientes si $$P(A \cap B) = P(A)P(B)$$.
+\end{definition}
+
+\begin{theorem}
+    Si $A$ y $B$ son independientes, entonces los siguientes pares de eventos tambien son independientes:
+    \begin{enumerate}
+        \item $A$ y $B^c$
+        \item $A^c$ y $B$
+        \item $A^c$ y $B^c$
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}
+    Decimos que los eventos $A_1, A_2, \ldots, A_n$ son independientes si para cualquier \\ 
+    subcolección $A_{i_1}, A_{i_2}, \ldots, A_{i_k}$ de $A_1, A_2, \ldots, A_n$ se cumple que:
+    \[
+        P(\bigcap_{j=1}^k A_{i_j}) = \prod_{j=1}^k P(A_{i_j})
+    \]
+\end{definition}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    1.4    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Variables aleatorias}
+
+
+
+En muchos casos la información relevante de un experimento aleatorio no está en los resultados del experimento, sino en ciertas funciones de esos resultados.
+
+\begin{definition}
+    Una variable aleatoria es una función de un espacio muestral $S$ a los números reales.
+
+Si X es una variable aleatoria con rango $Y = \{y_1, y_2, \ldots\}$, la función de probabilidad $P_{X}$ de X esta definida de la
+siguiente manera: 
+\[ P_X(X=y_i) = P(\{s \in S : X(s) = y_i\}) \]
+
+Si queremos describir el valor de X para conjuntos no numerables, escribimos:
+\[ P_X(X \in A) = P(\{s \in S : X(s) \in A\}) \]
+\end{definition}
+
+\begin{note}
+    Denotaremos a las variables aleatorias con letras mayúsculas y a los valores que pueden tomar con letras minúsculas.
+    Por ejemplo, si $X$ es una variable aleatoria, $x$ es un valor que puede tomar $X$.
+\end{note}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    1.5    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Funciones de distribución}
+\begin{definition}
+    La función de distribución acumulada (fda) de una variable aleatoria $X$ es:
+    \[
+        F_X(x) = P(X \leq x), \quad \forall x \in \mathbb{R}
+    \]
+    
+\end{definition}
+
+\begin{example}
+    Un ejemplo típico de una función de distribución acumulada es el de una distribución normal estándar:
+    \begin{center}
+    \begin{tikzpicture}[scale=0.8]
+    \begin{axis}[
+        xlabel=$x$,
+        ylabel={$F_X(x)$},
+        ylabel style={rotate=-90, anchor=east, at={(ticklabel cs:0.5)}, xshift=-10pt},
+        xmin=-3,
+        xmax=3,
+        ymin=0,
+        ymax=1,
+        axis lines*=left,
+        no marks
+    ]
+    \addplot[blue,thick,jump mark right] coordinates {
+        (-3, 0)
+        (-2, 0.2)
+        (-1, 0.4)
+        (0, 0.6)
+        (1, 0.8)
+        (2, 0.95)
+        (3, 0.95)
+    };
+    \addplot[only marks, mark=*, mark size=2pt, mark options={fill=white}] coordinates {
+        (-2, 0.2)
+        (-1, 0.4)
+        (0, 0.6)
+        (1, 0.8)
+    };
+    \end{axis}
+    \end{tikzpicture}
+    \end{center}
+\end{example}
+
+\begin{theorem}
+    Una función $F_X(x)$ es una función de distribución acumulada de una variable aleatoria $X$ si y solo si:
+    \begin{enumerate}
+        \item $\lim_{x \to -\infty} F_X(x) = 0$ y $\lim_{x \to \infty} F_X(x) = 1$.
+        \item $F_X(x)$ es no decreciente.
+        \item $F_X(x)$ es continua por la derecha, es decir, para cualquier $x_0 \in \mathbb{R}$ se cumple que:
+        \[
+            \lim_{x \to x_0^+} F_X(x) = F_X(x_0)
+        \]
+        
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}
+    Sea X una variable aleatoria. 
+    \begin{enumerate}
+        \item Decimos que $X$ es continua si $F_X(x)$ es continua.
+        \item Decimos que $X$ es discreta si $F_X(x)$ es una función escalonada .
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    Sean $X$ y $Y$ variables aleatorias. Decimos que $X$ y $Y$ son identicamente distribuidas si $P(X \in A) = P(Y \in A)$
+     para todo $A \in \mathcal{B}$.
+\end{definition}
+
+\begin{remark}
+    La definición anterior no implica que $X = Y$.
+\end{remark}
+
+\begin{theorem}
+    Las dos siguientes afirmaciones son equivalentes:
+    \begin{enumerate}
+        \item $X$ y $Y$ son identicamente distribuidas.
+        \item $F_X(x) = F_Y(x)$ para todo $x \in \mathbb{R}$
+    \end{enumerate}
+\end{theorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    1.6    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Función de densidad y función de masa de probabilidad}
+\begin{definition}
+    La función de masa de probabilidad de una variable aleatoria discreta $X$ es:
+    \[
+        f_X(x) = P(X = x)
+    \]
+\end{definition}
+
+\begin{remark}
+    Notemos que:
+    \begin{enumerate}
+        \item Para el caso discreto $P(X \leq b) = \sum_{x \leq b} f_X(x) = F_X(b)$.
+        \item Para el caso continuo evaluar en un punto nos daría cero pero
+         $$P(X \leq b) = \int_{-\infty}^b f_X(x) dx = F_X(b)$$ y por el teorema fundamental del cálculo si $F_X(x)$
+          es diferenciable
+         $$\frac{d}{dx} F_X(x) = f_X(x)$$. 
+    \end{enumerate}
+\end{remark}
+
+\begin{definition}
+    La función de densidad de probabilidad de una variable aleatoria continua $X$ es la función que satisface:
+    \[
+        F_X(x) = \int_{-\infty}^x f_X(x) dx
+    \]
+\end{definition}
+
+\begin{note}
+    \begin{enumerate}
+        \item Para decir que la distribución de $X$ esta dada por $F_X(x)$ escribimos $X \sim F_X(x)$.
+        \item Tambien podemos escribir $X \sim f_X(x)$.
+        \item Si $X$ y $Y$ son variables aleatorias identicamente distribuidas, escribimos $X \sim Y$.
+    \end{enumerate}
+\end{note}
+
+\begin{theorem}
+    Una función $f_X(x)$ es una función de densidad de probabilidad de una variable aleatoria $X$ si y solo si:
+    \begin{enumerate}
+        \item $f_X(x) \geq 0, \forall x$
+        \item $\int_{-\infty}^\infty f_X(x) dx = 1$ o $\sum_{x \in \mathbb{R}} f_X(x) = 1$
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    Cualquier función $h$ no negativa en $A \in \mathcal{B}$ cuya integral o suma sobre $A$ sea finita,
+     puede ser interpretada como una función de densidad de probabilidad, es decir, si:
+     \[
+        \int_{\{x \in A\}} h(x) dx \leq K 
+     \]
+      para alguna constante $K>0$, entonces $$f_X(x) = \frac{h(x)}{K}$$ es una función de densidad de probabilidad de 
+      $X:A \to \mathbb{R}$.
+\end{remark}
+
+
+
+
+
+
+% Aquí puedes empezar a escribir tus resultados matemáticos
+% Algunos entornos útiles:
+% \begin{theorem} ... \end{theorem}
+% \begin{proof} ... \end{proof}
+% \begin{equation} ... \end{equation}
+% \begin{align*} ... \end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    Capitulo 2    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Transformaciones y esperanza}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    Capitulo 2   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Funciones de distribución de una variable aleatoria}
+
+\begin{proposition}
+    Si $X$ es una variable aleatoria y $g$ es una función medible, entonces $Y = g(X)$ es una variable aleatoria.
+    Como $Y$ es una función de $X$ podemos describir el comportamiento probabilístico de $Y$ en términos de $X$.
+    \[
+        P(Y \in A) = P(g(X) \in A) 
+    \]
+\end{proposition}
+
+\begin{proposition}
+    La función de probabilidad dada por 
+    \begin{align*}
+        P(Y\in A) &= P(g(X) \in A)\\
+        &= P(\{ x \in \mathcal{X}: g(x) \in A\})\\
+        &= P(X \in g^{-1}(A))
+    \end{align*}        
+\end{proposition}
+
+\begin{proposition}
+    Si $X$ y $Y$ son variables aleatorias continuasy $g$ es una función medible, entonces la función de distribución de $Y$ está dada por:
+    \begin{align*}
+        F_Y(y) &= P(Y \leq y)\\
+        &= P(g(X) \leq y)\\
+        &= P(\{x \in \mathcal{X}: g(x) \leq y\})\\
+        &= \int_{\{x \in \mathcal{X}: g(x) \leq y\}} f_X(x) dx
+    \end{align*}    
+\end{proposition}
+
+\begin{definition}
+    Sea $X$ una variable aleatoria. Llamamos soporte de $X$ al conjunto:
+    \[
+        \text{soporte}(X) = \{x \in \mathcal{X}: f_X(x) > 0\}
+    \]
+\end{definition}
+
+\begin{remark}
+    Al hacer transformaciones es importante tener en mente cual es el espacio muestral de cada variable aleatoria. Notemos que  si 
+    \[
+        \mathcal{X} = \{x: f_X(x) > 0\}
+    \]
+    entonces el soporte de $Y = g(X)$ es:
+    \[
+        \mathcal{Y} = \{y: f_Y(y) > 0\} = \{y: y = g(x) \text{ para algún } x \in \mathcal{X}\}
+    \]
+\end{remark}
+
+\begin{theorem}
+    Sea $X$ con función de distribución $F_X(x)$ y $Y = g(X)$. $\mathcal{X}=\{x: f_X(x) > 0\}$ y $\mathcal{Y}=\{y: y = g(x) \text{ para algún } x \in \mathcal{X}\}$.
+    Entonces:
+    \begin{enumerate}
+        \item Si $g$ es una función creciente en $\mathcal{X}$, entonces:
+        \[
+            F_Y(y) = F_X(g^{-1}(y)), \quad \text{para } y \in \mathcal{Y}
+        \]
+        \item Si $g$ es una función decreciente en $\mathcal{X}$, entonces:
+        \[
+            F_Y(y) = 1 - F_X(g^{-1}(y)), \quad \text{para } y \in \mathcal{Y}
+        \]
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+    Si $g$ es una función monótona:
+    \[
+        f_Y(y) = \frac{d}{dy} F_Y(y) = \begin{cases}
+            f_X(g^{-1}(y))\frac{d}{dy} g^{-1}(y), & \text{para } g \text{ creciente}\\
+            -f_X(g^{-1}(y))\frac{d}{dy} g^{-1}(y), & \text{para } g \text{ decreciente}
+        \end{cases} 
+    \]
+\end{corollary}
+
+\begin{theorem}
+    Sea $X$ una variable aleatoria con función de densidad $f_X(x)$ y $Y = g(X)$ con $g$ una función monótona. Sean $\mathcal{X}=\{x: f_X(x) > 0\}$ y $\mathcal{Y}=\{y: y = g(x) \text{ para algún } x \in \mathcal{X}\}$.
+    Entonces:
+    \[
+        f_Y(y) = \begin{cases}
+            f_X(g^{-1}(y)) \left| \frac{d}{dy} g^{-1}(y) \right|, & \text{para } y \in \mathcal{Y}\\
+            0, & \text{en otro caso}
+        \end{cases} 
+    \]
+\end{theorem}
+
+\begin{theorem}
+    Sea $X$ una variable aleatoria con función de densidad $f_X(x)$ y $Y = g(X)$. Definimos a $\mathcal{X}=\{x: f_X(x) > 0\}$.
+    Supongamos que existe una partición $A_1, A_2, \ldots A_k$ de $\mathcal{X}$ tal que $g$ es monótona en cada $A_i$ para $i=1,2,\ldots, k$ y tal que $P(A_0) = 0$.
+    y $f_i(x)$ continua en cada $A_i$, respectivamente satisfaciendo:
+    \begin{enumerate}
+        \item $g_X(x) = g_{A_i}(x)$ para $x \in A_i$
+        \item $g_i$ monótona en $A_i$
+        \item El conjunto $\mathcal{Y}=\{y: y = g(x) \text{ para algún } x \in A_i\}$ es el mismo para todo $i$.
+    \end{enumerate}
+    Entonces:
+    \[
+        f_Y(y) = \sum_{i=0}^\infty f_{A_i}(g^{-1}(y)) \left| \frac{d}{dy} g^{-1}(y) \right|
+    \]
+\end{theorem}
+
+Si tenemos una $F_X(x)$ continua y estrictamente creciente, entonces podemos definir una variable aleatoria $Y = F_X(X)$ y aplicar el teorema anterior para obtener una $Y$
+
+\begin{definition}
+    Si $F_X(x)$ es no decreciente entonces podemos definir para $0<y<1$
+    $$F_X^{-1}(y) = \inf \{x: F_X(x) \geq y\}$$
+\end{definition}
+
+\begin{remark}
+    $F_X^{-1}(y)$ definida como en la definición anterior es una función de distribución y coincide con la inversa de $F_X(x)$ en el caso en el que $F_X(x)$ es estrictamente creciente.
+\end{remark}
+
+
+\begin{theorem}[\textbf{Transformación integral de probabilidad}]
+    Sea $X$ con función de distribución $F_X(x)$ continua y definimos una variable aleatoria $Y = F_X(X)$. Entonces $Y$ tiene distribución uniforme en el
+     intervalo $(0,1)$, es decir:
+     $$f_Y(y) = 1 \text{ o, equivalentemente }$$
+     $$P(Y \leq y) = y \text{ para } 0 < y < 1$$
+\end{theorem}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Esperanza}
+La esperanza o valor esperado es simplemente un promedio ponderado por la probabilidad de los posibles valores que puede tomar una variable aleatoria.
+
+\begin{definition}
+    La esperanza de una variable aleatoria $g(X)$ donde $X$ tiene función de densidad $f_X(x)$ es:
+    \[
+        E(g(X)) = \begin{cases}
+            \sum_{x \in \mathcal{X}} g(x) f_X(x), & \text{si } X \text{ es discreta}\\
+            \int_\mathcal{X} g(x) f_X(x) dx, & \text{si } X \text{ es continua}
+        \end{cases}
+    \]
+    En el caso de que la integral o la suma esten definidas, en caso contrario se dice que la esperanza no existe.
+\end{definition}
+
+\begin{theorem}
+    Sea $X$ una variable aleatoria y $a, b, c$ constantes. Entonces para cualquier $g_1(X), g_2(X)$ cuya esperanza existe:
+    \begin{enumerate}
+        \item $E(ag_1(X) + bg_2(X) + c) = aE(g_1(X)) + bE(g_2(X)) + c$
+        \item Si $g_1(X) \geq 0$, entonces $E(g_1(X)) \geq 0$.
+        \item Si $g_1(X) \geq g_2(X)$ para todo $x$, entonces $E(g_1(X)) \geq E(g_2(X))$.
+        \item Si $a \leq g_1(x) \leq b$ para todo $x$, entonces $a \leq E(g_1(X)) \leq b$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{definition}
+    La mediana de una variable aleatoria $X$ es un número $m$ tal que $$P(X \leq m) = \frac{1}{2} \text{ y } P(X \geq m) = \frac{1}{2}$$.
+    (En el caso continuo satisface:
+    $$ \int_{-\infty}^m f_X(x) dx = \int_m^\infty f_X(x) dx = \frac{1}{2} $$
+    ).
+\end{definition}
+
+\begin{proposition}
+    Si $b=E(X)$, entonces 
+    \begin{enumerate}
+        \item $E(X-b) = 0$
+        \item $\min E((X-b)^2) = E(X-E(X))^2$
+        \item Si $X$ es una v.a. continua y $m$ la mediana de $X$ y $a$ cualquier otro número, entonces $\min_a E(|X-a|) = E(|X-m|)$.
+        \item $\frac{d}{dx}E(X-a)^2 = 0 \text{ si y solo si } a = E(X)$
+    \end{enumerate}
+\end{proposition}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    Capitulo 3    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Familias comunes de distribuciones}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    Capitulo 4    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Variables aleatorias múltiples}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    Capitulo 5    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Propiedades de una muestra aleatoria}
+\subsection{Propiedades básicas de una muestra aleatoria}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    Capitulo 6    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Principios de reducción de datos}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    Capitulo 6   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Introducción}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    Capitulo 7    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Estimación puntual}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    Capitulo 8   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Pruebas de hipótesis}
+\subsection{Introducción}
+
+\begin{definition}
+    Una hipótesis es una afirmación acerca del parámetro de una distribución de probabilidad.
+\end{definition}
+
+El objetivo de una prueba de hipótesis es decidir cuál de dos hipótesis mutuamente excluyentes, $H_0$ y $H_1$, es más probable que sea cierta.
+
+\begin{definition}
+Las dos hipótesis mutuamente excluyentes en una prueba de hipótesis son:
+\begin{enumerate}
+    \item La hipótesis nula, $H_0$, que es una afirmación que se desea poner a prueba.
+    \item La hipótesis alternativa, $H_1$, que es una afirmación que se acepta si los datos muestrales proporcionan evidencia suficiente de que $H_0$ es falsa.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}
+    Si $\theta$ denota el parámetro de una población la forma general de una prueba de hipótesis es:
+    $$H_0: \theta \in \Theta_0 \text{ vs } H_1: \theta \in \Theta_1 = \Theta_0^c$$
+    donde $\Theta_0$ es subconjunto de $\Theta$ y $\Theta_1 = \Theta_0^c$ es el complemento de $\Theta_0$ en $\Theta$.
+\end{remark}
+
+\begin{definition}
+    Una prueba de hipótesis es una regla de decisión que especifica:
+    \begin{enumerate}
+        \item Para cuales valores de la muestra aleatoria $X$ la hipótesis nula $H_0$ se acepta.
+        \item Para cuales valores de la muestra aleatoria $X$ la hipótesis nula $H_0$ se rechaza y la hipótesis alternativa $H_1$ se acepta.
+    \end{enumerate}
+    Al subconjunto del espacio muestral para el cual $H_0$ es rechazada se le llama región crítica o de rechazo de $H_0$. Al complemento de la región crítica
+    se le llama región de aceptación de $H_0$.
+\end{definition}
+
+Usualmente una prueba puede especificarse en terminos de una estadística de prueba $W(\bold{X})=W(X_1, X_2, \ldots, X_n)$ una función 
+de la muestra.
+
+\subsection{Metodos para encontrar pruebas}
+Se detallarán 4 métodos.
+
+\subsubsection{Método de la razón de verosimilitud}
+
+Recordemos que si $X_1, X_2, \ldots, X_n$ es una muestra aleatoria de una población con función de densidad $f(x;\theta)$ entonces la función de verosimilitud
+es:
+$$L(\theta | x_1, x_2, \ldots, x_n) = L(\theta | \bold{x}) = f(\bold{x}| \theta) = \prod_{i=1}^n f(x_i|\theta)$$
+
+Si definimos a $\Theta$ como el espacio muestral completo las pruebas por cociente de verosimilitud se definen como:
+
+\begin{definition}
+    El estadistico de prueba para una prueba por cociente de verosimilitud para probar\\
+     $H_0: \theta \in \Theta_0$ vs $H_1: \theta \in \Theta_1 = \Theta_0^c$ es:
+    $$ \lambda(\bold{x}) = \frac{\sup_{\theta \in \Theta_0} L(\theta | \bold{x})}{\sup_{\theta \in \Theta} L(\theta | \bold{x})} $$
+    Un test de razón de verosimilitud es una prueba de hipótesis que tiene una región de rechazo de la forma:
+    $$ \{ \bold{x}: \lambda(\bold{x}) < c \} $$
+    para alguna constante $c$ que depende del nivel de significancia $\alpha$ de la prueba.
+\end{definition}
+
+Notemos que en el cociente anterior, el numerador es la probabilidad máxima de la muestra $\bold{x}$ bajo la hipótesis $H_0$ y el 
+denominador es la probabilidad máxima de la muestra $\bold{x}$ para cualquier valor del parámetro.
+
+La hipotesis nula $H_0$ se rechaza si $\lambda(\bold{x})$ es pequeño pues esto quiere decir que hay mejores valores para el parámetro $\theta$
+fuera de $\Theta_0$.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    Capitulo 9   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Intervalos de confianza}
+
+\begin{thebibliography}{9}
+    \bibitem{Casella}
+        Casella, G. and Berger, R.L. (2002), \textit{Statistical Inference}, 2nd ed.
+\end{thebibliography}
+\end{document}

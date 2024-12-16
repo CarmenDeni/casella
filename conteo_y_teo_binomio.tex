@@ -1,0 +1,205 @@
+\documentclass[14pt]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[left=2cm, right=2cm, top=1cm, bottom=1cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{etoolbox}
+\usepackage{fancyhdr}
+\usepackage{anyfontsize}
+
+% Configurar el estilo de página
+\pagestyle{fancy}
+\fancyhf{} % Limpiar todos los campos
+\fancyfoot[C]{\thepage} % Colocar número de página en el centro
+\renewcommand{\footrulewidth}{0pt} % Quitar la línea del pie de página
+\renewcommand{\headrulewidth}{0pt} % Quitar la línea superior
+\setlength{\footskip}{21pt} % Ajustar la distancia del número de página
+
+% Aumentar el espacio entre columnas
+\setlength{\columnsep}{6em} % Puedes ajustar el valor según necesites
+
+% Definiciones para entornos matemáticos
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{proposition}[theorem]{Proposición}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{corollary}[theorem]{Corolario}
+\newtheorem{definition}[theorem]{Definición}
+\newtheorem{example}{Ejemplo}[section]
+\newtheorem{remark}{Observación}[section]
+\newtheorem{note}{Notación}[section]
+\newtheorem{axiom}[theorem]{Axioma}
+
+% Agregar después de las definiciones de newtheorem, antes de \begin{document}
+
+% Alternativa: ajustar espacios específicos para cada tipo de entorno
+\BeforeBeginEnvironment{theorem}{\vspace{15pt}}
+\AfterEndEnvironment{theorem}{\vspace{15pt}}
+
+\BeforeBeginEnvironment{definition}{\vspace{15pt}}
+\AfterEndEnvironment{definition}{\vspace{15pt}}
+
+\BeforeBeginEnvironment{example}{\vspace{15pt}}
+\AfterEndEnvironment{example}{\vspace{15pt}}
+
+\BeforeBeginEnvironment{remark}{\vspace{15pt}}
+\AfterEndEnvironment{remark}{\vspace{15pt}}
+
+\BeforeBeginEnvironment{proposition}{\vspace{15pt}}
+\AfterEndEnvironment{proposition}{\vspace{15pt}}
+
+\title{Acordeon Casella}
+\author{Carmen Dení}
+\date{\today}
+
+\begin{document}
+\fontsize{18}{22}\selectfont
+% Iniciar el modo landscape
+% Contenido directo sin columnas
+\section{Conteo}
+\begin{theorem}
+    Si un trabajo consiste en k tareas sucesivas, y la tarea $i$ puede ser realizada
+    de $n_i$ maneras, entonces el trabajo puede ser realizado de $n_1 \times n_2 \times \cdots \times n_k$ maneras.
+\end{theorem}
+
+\begin{remark}
+    Se puede contar con remplazo o sin remplazo, tomando en cuenta el orden o no.
+\end{remark}
+
+\begin{definition}
+Para un entero positivo $n$, $n!$ denota el producto de los enteros positivos desde 1 hasta $n$.
+Es decir: $$n! = 1 \times 2 \times \cdots \times n$$.
+Definimos $0! = 1$.
+\end{definition}
+
+\begin{definition}
+    Para enteros no negativos $n$ y $r$, con $n \geq r$, definimos el simbolo $\binom{n}{r}$ como el numero de subconjuntos
+    de $r$ elementos de un conjunto de $n$ elementos. Este simbolo se lee "r en n" y se calcula como:
+    \[
+        \binom{n}{r} = \frac{n!}{r!(n-r)!}
+    \]
+\end{definition}
+
+\begin{proposition}
+    Supongamos que $n$ y $r$ son enteros no negativos con $n \geq r$ y supongamos que queremos elegir $r$ objetos de un conjunto
+    de $n$ objetos. Podemos hacerlo de las siguientes maneras:
+    \begin{enumerate}
+        \item Ordenados sin reemplazo.
+        \begin{align*}  
+            \frac{n!}{(n-r)!}
+        \end{align*}
+        \item Ordenados con reemplazo.
+        \begin{align*}
+            n^r
+        \end{align*}
+        \item No ordenados sin reemplazo.
+        \begin{align*}
+            \binom{n}{r}
+        \end{align*}
+        \item No ordenados con reemplazo.
+        \begin{align*}
+            \binom{n+r-1}{r-1}
+        \end{align*}
+    \end{enumerate}
+\end{proposition}
+
+\begin{definition}
+    Sea $S = \{s_1, s_2, \ldots, s_N\}$ un espacio muestral finito. Decimos que todos los resultados 
+    son igualmente probables si $$P(\{s_i\}) = \frac{1}{N}$$ para todo $i = 1, 2, \ldots, N$.
+\end{definition}
+
+\begin{proposition}
+    Si $S$ es un espacio muestral finito con $N$ resultados igualmente probables, entonces para cualquier evento $A$,
+    \[
+        P(A) = \sum_{\{s_i \in A\}} P(\{s_i\}) = \sum_{\{i: s_i \in A\}}^N \frac{1}{N} = \frac{|A|}{N}
+    \]
+\end{proposition}
+
+
+\begin{proposition}
+    Sea $n$ un entero no negativo. Entonces:
+    \begin{enumerate}
+        \item $\sum_{k=0}^n \binom{n}{k}x^{n-k}y^k = (x+y)^n$ en particular 
+        \item $\sum_{k=0}^n \binom{n}{k} = 2^n$
+        \item $\sum_{k=0}^n \binom{n}{k}x^k = (x+1)^n$
+        \item $\sum_{k=0}^n (-1)^k \binom{n}{k} = 0$
+    \end{enumerate}
+\end{proposition}
+
+
+\begin{proposition}
+    Sean $n$ y $r$ enteros no negativos con $n \geq r$. Pensemos que queremos saber cuantos vectores $(x_1, x_2, \ldots, x_r)$ de longitud $r$ distintos
+    podemos formar tales que la suma de sus componentes es $n$. Entonces:
+    \begin{enumerate}
+        \item Si $x_i > 0$, entonces el numero de vectores es $\binom{n + r-1}{r-1}$
+        \item Si $x_i \geq 0$, entonces el numero de vectores es $\binom{n-1}{r-1}$
+    \end{enumerate}
+\end{proposition}
+    
+\begin{proposition}
+    Sean $n$ y $k$. Si tenemos un vector $(x_1, x_2, \ldots, x_n)$ de longitud $n$ 
+    donde $x_i \in \{0,1\}$ entonces el numero de vectores distintos que podemos formar tal que 
+    \[
+        \sum_{i=1}^n x_i \geq k
+    \text{    es   }
+        \sum_{i=k}^n \binom{n}{i}
+    \]
+\end{proposition}
+
+\begin{proposition}
+    \begin{enumerate}
+    \item Sean, $n, m$ y $r$ enteros no negativos con $n + m \geq r$, entonces:
+    $$ \binom{n+m}{r} = \sum_{k=0}^r \binom{n}{k} \binom{m}{r-k} $$
+    (Considerar dos clases y las formas de elegir $r$ elementos de $n+m$ de las cuales $k$ pertenecen a la primera clase y $r-k$ a la segunda clase)
+
+    \item $$ \binom{2n}{n} = \sum_{k=0}^n \binom{n}{k}^2 $$
+    \item $$ \binom{n}{k} k = (n-k + 1) \binom{n}{k-1} = n \binom{n-1}{k-1} $$
+    (Podemos pensar en un comite en el que se elige primero el comite luego la silla de entre el comite o todo el comite que no esta en la silla y luego la silla
+o la silla y luego todo el comite restante)
+    \item Sean $n$ y $r$ enteros no negativos con $n \geq r$. El número de formas de distribuir $n$ objetos entre $r$ conjuntos
+    tal que cada conjunto reciba al menos un objeto está dado por:
+    \[
+        \sum_{k=0}^r (-1)^{k+1}\binom{r}{k}(r-k)^n
+    \]
+    A esta forma de conteo se le llama principio de inclusion-exclusion.
+    \item A la siguiente identidad le llamamos identidad combinatoria de Fermat:
+    \[
+        \binom{n}{k} = \sum_{i = k}^n \binom{i-1}{k-1} \quad n \geq k
+    \]
+    (¿Cuantos subconjuntos de tamaño $k$ tienen como elemento maximo $i$?)
+    \item $$ \sum_{k=1}^n k \binom{n}{k} = n 2^{n-1} $$\\
+    (¿Para comites de tamaño $k$ cuantos comites con silla hay o cuantas elecciones de silla para comietes de cualquier tamaño?)
+    \item $$ \sum_{k=1}^n \binom{n}{k}k^2 = n (n+1) 2^{n-2} $$
+    (¿Cuantos comites tenemos si elegimos un presidente y un secretario -posiblemente el mismo individuo-?)
+    \item Para $n\geq 0$:
+    \[
+        \sum_{i=0}^n (-1)^{i}\binom{n}{i} = 0
+    \]
+    \item Para $i leq n$:$$\sum_{i=j}^n \binom{n}{j}\binom{j}{i} = \binom{n}{i} 2^n-i$$
+    \item Si tenemos $k$ lugares y y $m$ objetos repetidos $k_1, k_2, \ldots, k_m$ con $k_1 + k_2 + \cdots + k_m = k$, entonces
+    el numero de formas de asignar los $k$ lugares a los $m$ objetos es:
+    \[
+        \frac{k!}{k_1! k_2! \cdots k_m!}
+    \]
+    \end{enumerate}
+\end{proposition}
+
+
+
+
+
+
+% Aquí puedes empezar a escribir tus resultados matemáticos
+% Algunos entornos útiles:
+% \begin{theorem} ... \end{theorem}
+% \begin{proof} ... \end{proof}
+% \begin{equation} ... \end{equation}
+% \begin{align*} ... \end{align*}
+
+\end{document}
